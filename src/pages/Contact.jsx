@@ -18,9 +18,11 @@ const Contact = () => {
                     </div>
                     <div className="contact-info">
                         <h4>Let's Work Together :</h4>
-                        <p><i className="fa-solid fa-envelope"></i> hello@goaero.com</p>
-                        <p><i className="fa-brands fa-whatsapp"></i> +1 800 GO-AERO</p>
-                        <p><i className="fa-brands fa-instagram"></i> @go_aero</p>
+                        <p><i className="fa-solid fa-envelope"></i> goaero.dev.in@gmail.com</p>
+                        <p><i className="fa-solid fa-phone"></i> +91 8134904755</p>
+                        <p><i className="fa-solid fa-phone"></i> +91 60004 22020</p>
+                        <p><i className="fa-brands fa-instagram"></i> <a href="https://www.instagram.com/goaero.in/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>@goaero.in</a></p>
+                        <p><i className="fa-brands fa-linkedin-in"></i> <a href="https://www.linkedin.com/in/go-aero-7814503a8/" target="_blank" rel="noopener noreferrer" style={{ color: 'inherit', textDecoration: 'none' }}>GoAero on LinkedIn</a></p>
                     </div>
                 </div>
 
@@ -39,9 +41,11 @@ const Contact = () => {
                         </div>
                         <div className="form-group">
                             <select>
-                                <option>Graphic Design</option>
-                                <option>Reels</option>
                                 <option>Web Development</option>
+                                <option>UI/UX Design</option>
+                                <option>Graphic Design</option>
+                                <option>Video Editing</option>
+                                <option>Social Media Content</option>
                             </select>
                         </div>
                         <div className="form-group">
