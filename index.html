@@ -10,6 +10,20 @@
 </head>
 
 <body>
+    <!-- Hidden form for Netlify Forms detection at build time -->
+    <form name="contact" data-netlify="true" netlify-honeypot="bot-field" hidden>
+        <input type="text" name="name" />
+        <input type="email" name="email" />
+        <select name="service">
+            <option>Web Development</option>
+            <option>UI/UX Design</option>
+            <option>Graphic Design</option>
+            <option>Video Editing</option>
+            <option>Social Media Content</option>
+        </select>
+        <textarea name="message"></textarea>
+        <input name="bot-field" />
+    </form>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
 </body>

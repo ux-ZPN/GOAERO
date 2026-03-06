@@ -32,15 +32,27 @@ const Contact = () => {
                         Ready to start a project? Fill out the form below and we'll get back to you as soon as possible.
                     </p>
 
-                    <form className="contact-form">
+                    <form
+                        className="contact-form"
+                        name="contact"
+                        method="POST"
+                        data-netlify="true"
+                        data-netlify-honeypot="bot-field"
+                    >
+                        {/* Required hidden fields for Netlify */}
+                        <input type="hidden" name="form-name" value="contact" />
+                        <div hidden>
+                            <input name="bot-field" />
+                        </div>
+
                         <div className="form-group">
-                            <input type="text" placeholder="Your Name" required />
+                            <input type="text" name="name" placeholder="Your Name" required />
                         </div>
                         <div className="form-group">
-                            <input type="email" placeholder="Your Email" required />
+                            <input type="email" name="email" placeholder="Your Email" required />
                         </div>
                         <div className="form-group">
-                            <select>
+                            <select name="service">
                                 <option>Web Development</option>
                                 <option>UI/UX Design</option>
                                 <option>Graphic Design</option>
@@ -49,9 +61,9 @@ const Contact = () => {
                             </select>
                         </div>
                         <div className="form-group">
-                            <textarea rows="5" placeholder="Project Details..." required></textarea>
+                            <textarea rows="5" name="message" placeholder="Project Details..." required></textarea>
                         </div>
-                        <button type="submit" className="submit-btn" onClick={(e) => e.preventDefault()}>
+                        <button type="submit" className="submit-btn">
                             Send Message <i className="fa-solid fa-paper-plane"></i>
                         </button>
                     </form>
