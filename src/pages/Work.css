@@ -172,8 +172,10 @@
 
 
 
-/* Graphic, Reels & Web Design Grids */
+/* Graphic, Reels, Web & Branding Design Grids */
 .style-graphic.gallery-grid,
+.style-branding.gallery-grid,
+.style-logo-intro.gallery-grid,
 .style-reels.gallery-grid,
 .style-web.gallery-grid {
     background: transparent;
@@ -182,6 +184,8 @@
 }
 
 .style-graphic .software-tags,
+.style-branding .software-tags,
+.style-logo-intro .software-tags,
 .style-reels .software-tags,
 .style-web .software-tags {
     right: 0px;
@@ -190,16 +194,25 @@
 
 .custom-reels-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1.5rem;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
     width: 100%;
 }
 
 .item-reel {
     aspect-ratio: 9 / 16;
-    max-width: 300px;
-    margin: 0 auto;
     width: 100%;
+    border-radius: 24px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+    overflow: hidden;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.item-reel:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+    border-color: var(--orange);
 }
 
 .mute-btn {
@@ -225,6 +238,225 @@
 .mute-btn:hover {
     background: rgba(0, 0, 0, 0.9);
     transform: scale(1.1);
+}
+
+/* Branding & PDF Viewer Grid */
+.merged-branding-layout {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    width: 100%;
+    margin-top: 2rem;
+}
+
+.branding-section-block {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.logo-design-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* Forced 2x2 grid */
+    gap: 2rem;
+    width: 100%;
+}
+
+.item-logo-crafted {
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    /* Taller aspect ratio to increase height */
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.branding-sub-label {
+    font-size: 0.9rem;
+    letter-spacing: 3px;
+    opacity: 0.5;
+    text-align: center;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding-bottom: 1rem;
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.pdf-viewer-container {
+    width: 100%;
+    max-width: 1100px;
+    margin: 3rem auto;
+    background: #ffffff;
+    border-radius: 30px;
+    position: relative;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    /* Keep content contained */
+}
+
+/* Ensure buttons can be seen outside the container */
+.project-category {
+    position: relative;
+}
+
+.pdf-page-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #ffffff;
+    padding: 2rem 0;
+    min-height: 400px;
+}
+
+.pdf-loading,
+.pdf-error {
+    height: 400px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--white);
+}
+
+.pdf-error {
+    color: var(--orange);
+}
+
+/* Swiper Customization */
+.pdf-swiper {
+    width: 100%;
+    padding-bottom: 40px !important;
+}
+
+.pdf-swiper .swiper-button-next,
+.pdf-swiper .swiper-button-prev {
+    color: var(--orange);
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 10;
+    transition: all 0.3s ease;
+}
+
+.pdf-swiper .swiper-button-prev {
+    left: 20px !important;
+}
+
+.pdf-swiper .swiper-button-next {
+    right: 20px !important;
+}
+
+.pdf-swiper .swiper-button-next:hover,
+.pdf-swiper .swiper-button-prev:hover {
+    background: var(--orange);
+    color: #ffffff;
+    transform: translateY(-50%) scale(1.1);
+}
+
+.pdf-swiper .swiper-button-next:after,
+.pdf-swiper .swiper-button-prev:after {
+    font-size: 1.5rem;
+    font-weight: 900;
+}
+
+.pdf-swiper .swiper-pagination-bullet-active {
+    background: var(--orange);
+}
+
+@media (max-width: 1200px) {
+    .pdf-swiper .swiper-button-next {
+        right: -20px !important;
+    }
+
+    .pdf-swiper .swiper-button-prev {
+        left: -20px !important;
+    }
+}
+
+@media (max-width: 768px) {
+    .pdf-viewer-container {
+        width: 100%;
+        border-radius: 15px;
+        margin: 2rem 0;
+    }
+
+    .pdf-swiper {
+        padding: 0 0 40px 0 !important;
+        overflow: hidden !important;
+        /* Clip slides on mobile for clean look */
+    }
+
+    .pdf-swiper .swiper-button-next,
+    .pdf-swiper .swiper-button-prev {
+        display: none !important;
+        /* Purely swipe-based on mobile */
+    }
+
+    .pdf-page-wrapper {
+        padding: 0;
+        min-height: auto;
+    }
+}
+
+.pdf-instructions {
+    text-align: center;
+    padding: 1.5rem;
+    color: var(--white);
+    /* Updated to use the project's dark variable */
+    opacity: 0.8;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+.pdf-instructions i {
+    color: var(--orange);
+    animation: swipeHint 2s infinite;
+}
+
+@keyframes swipeHint {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    50% {
+        transform: translateX(10px);
+    }
+}
+
+.item-branding {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+}
+
+/* Logo Intro Section */
+.custom-logo-intro-grid {
+    width: 100%;
+    max-width: 1100px;
+    margin: 3rem auto;
+}
+
+.item-logo-intro {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-radius: 30px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    background: #000;
 }
 
 /* Web UI Grid */
@@ -358,6 +590,12 @@
         width: 100%;
         text-align: right;
         margin-top: -5px;
+    }
+
+    .custom-reels-grid {
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        padding: 0 5%;
     }
 
     .custom-graphic-grid {

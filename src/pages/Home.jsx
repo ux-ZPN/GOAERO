@@ -233,7 +233,7 @@ const Home = () => {
                         <h2 className="detail-title"><span>"</span> OUR PHILOSOPHY <span>.</span></h2>
                     </div>
                     <p>
-                        We believe that great design is inherently tied to function. A beautiful website is useless if it's slow, and a fast application is pointless if it's confusing. Our philosophy revolves around user-centric development—we put your customer first. From wireframes and UI designs completely through to the final line of code and post-launch media strategy, we ensure every touchpoint is meticulously crafted.
+                        We believe that great design is inherently tied to function. A beautiful website is useless if it's slow, and a fast application is pointless if it's confusing. Our philosophy revolves around user-centric development we put your customer first. From wireframes and UI designs completely through to the final line of code and post-launch media strategy, we ensure every touchpoint is meticulously crafted.
                     </p>
                 </div>
             </section>

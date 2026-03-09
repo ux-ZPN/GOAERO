@@ -1,5 +1,64 @@
 import React, { useState, useRef } from 'react';
+import { Document, Page, pdfjs } from 'react-pdf';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Pagination, Mousewheel } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'react-pdf/dist/Page/AnnotationLayer.css';
+import 'react-pdf/dist/Page/TextLayer.css';
 import './Work.css';
+
+// Set up PDF.js worker
+pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+
+const PDFViewer = ({ pdfUrl }) => {
+    const [numPages, setNumPages] = useState(null);
+
+    function onDocumentLoadSuccess({ numPages }) {
+        setNumPages(numPages);
+    }
+
+    return (
+        <div className="pdf-viewer-container">
+            <Document
+                file={pdfUrl}
+                onLoadSuccess={onDocumentLoadSuccess}
+                loading={<div className="pdf-loading">Loading PDF...</div>}
+                error={<div className="pdf-error">Failed to load PDF. Please try again later.</div>}
+            >
+                <Swiper
+                    modules={[Navigation, Pagination, Mousewheel]}
+                    navigation
+                    pagination={{ clickable: true }}
+                    mousewheel={{ forceToAxis: true }}
+                    grabCursor={true}
+                    simulateTouch={true}
+                    className="pdf-swiper"
+                    spaceBetween={10}
+                    slidesPerView={1}
+                >
+                    {Array.from(new Array(numPages), (el, index) => (
+                        <SwiperSlide key={`page_${index + 1}`}>
+                            <div className="pdf-page-wrapper">
+                                <Page
+                                    pageNumber={index + 1}
+                                    width={window.innerWidth > 768 ? 1000 : window.innerWidth * 0.9}
+                                    renderTextLayer={false}
+                                    renderAnnotationLayer={false}
+                                />
+                            </div>
+                        </SwiperSlide>
+                    ))}
+                </Swiper>
+            </Document>
+            <div className="pdf-instructions">
+                <i className="fa-solid fa-hand-pointer"></i>
+                <span>Swipe or use arrows to flip pages</span>
+            </div>
+        </div>
+    );
+};
 
 const ReelItem = ({ src, alt, type }) => {
     const [isMuted, setIsMuted] = useState(true);
@@ -16,13 +75,15 @@ const ReelItem = ({ src, alt, type }) => {
                 <>
                     <video
                         ref={videoRef}
-                        src={src}
                         muted={isMuted}
                         loop
                         autoPlay
                         playsInline
                         style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                    />
+                    >
+                        <source src={src} type={src.endsWith('.mpeg') ? 'video/mpeg' : 'video/mp4'} />
+                        Your browser does not support the video tag.
+                    </video>
                     <button onClick={toggleMute} className="mute-btn">
                         {isMuted ? <i className="fa-solid fa-volume-xmark"></i> : <i className="fa-solid fa-volume-high"></i>}
                     </button>
@@ -61,7 +122,8 @@ const Work = () => {
             imgSrc: '/assets/reels_mockup_1772652169818.png',
             gridImages: [
                 { src: '/assets/reel1.mp4', alt: 'Reel 1', type: 'video' },
-                { src: '/assets/reel2.mp4', alt: 'Reel 2', type: 'video' }
+                { src: '/assets/reel2.mp4', alt: 'Reel 2', type: 'video' },
+                { src: '/assets/Jeeva.mp4', alt: 'Reel 3', type: 'video' }
             ],
             tags: [{ t: 'Pr', bg: '#2b005e', color: '#d97cff' }, { t: 'Ae', bg: '#001e36', color: '#999999' }]
         },
@@ -77,6 +139,22 @@ const Work = () => {
                 { src: '/assets/xplorexp.png', alt: 'Xplorexp', caption: '2. Xplorexp', description: 'A real-world project built for a travel company. A stunning booking platform featuring dynamic visuals and an intuitive user interface engineered to maximize conversions and simplify journey planning.' }
             ],
             tags: [{ t: 'Re', bg: '#222', color: '#61dafb' }, { t: 'Js', bg: '#f7df1e', color: '#000' }]
+        },
+        {
+            id: 'branding',
+            title: 'Logo & Branding',
+            desc: 'VISUAL IDENTITY & BRAND STRATEGY',
+            smallDesc: 'Flip through our visual identity guide and watch our brand motion story to see how we build cohesive identities through strategy and design.',
+            styleClass: 'style-branding',
+            pdfUrl: '/assets/Artboard 82x-100.pdf',
+            introVideo: '/assets/purpleshrine.mp4',
+            logoDesignImages: [
+                { src: '/assets/logo1.png', alt: 'Logo Design 1' },
+                { src: '/assets/logo2.png', alt: 'Logo Design 2' },
+                { src: '/assets/logo3.png', alt: 'Logo Design 3' },
+                { src: '/assets/logo 4.jpeg', alt: 'Logo Design 4' }
+            ],
+            tags: [{ t: 'Ai', bg: '#001f3f', color: '#ff7c00' }, { t: 'Ps', bg: '#001f3f', color: '#39CCCC' }, { t: 'Ae', bg: '#00005b', color: '#9999ff' }]
         }
     ];
 
@@ -107,6 +185,10 @@ const Work = () => {
                         <div className="icon-box"><i className="fa-solid fa-laptop-code"></i></div>
                         <span>Web Development</span>
                     </button>
+                    <button className={`filter-btn ${filter === 'branding' ? 'active' : ''}`} onClick={() => setFilter('branding')}>
+                        <div className="icon-box"><i className="fa-solid fa-medal"></i></div>
+                        <span>Logo & Branding</span>
+                    </button>
                 </div>
             </div>
 
@@ -124,7 +206,7 @@ const Work = () => {
                                 <p className="project-desc"><span>"</span> {cat.desc} <span>.</span></p>
                                 <p className="small-desc">{cat.smallDesc}</p>
                                 <div className={`gallery-grid ${cat.styleClass}`}>
-                                    {cat.gridImages ? (
+                                    {cat.gridImages || cat.pdfUrl ? (
                                         cat.id === 'graphic' ? (
                                             <div className="custom-graphic-grid">
                                                 <div className="gallery-item item-l169">
@@ -142,6 +224,47 @@ const Work = () => {
                                                 {cat.gridImages.map((img, idx) => (
                                                     <ReelItem key={idx} src={img.src} alt={img.alt} type={img.type} />
                                                 ))}
+                                            </div>
+                                        ) : cat.id === 'branding' ? (
+                                            <div className="merged-branding-layout">
+                                                {cat.pdfUrl && (
+                                                    <div className="branding-section-block">
+                                                        <h4 className="branding-sub-label">BRAND IDENTITY GUIDE</h4>
+                                                        <PDFViewer pdfUrl={cat.pdfUrl} />
+                                                    </div>
+                                                )}
+                                                {cat.introVideo && (
+                                                    <div className="branding-section-block">
+                                                        <h4 className="branding-sub-label">LOGO MOTION STORY</h4>
+                                                        <div className="custom-logo-intro-grid">
+                                                            <div className="gallery-item item-logo-intro">
+                                                                <video
+                                                                    controls
+                                                                    autoPlay
+                                                                    muted
+                                                                    loop
+                                                                    playsInline
+                                                                    style={{ width: '100%', borderRadius: '20px' }}
+                                                                >
+                                                                    <source src={cat.introVideo} type="video/mp4" />
+                                                                    Your browser does not support the video tag.
+                                                                </video>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                )}
+                                                {cat.logoDesignImages && (
+                                                    <div className="branding-section-block">
+                                                        <h4 className="branding-sub-label">LOGOS WE HAVE CRAFTED</h4>
+                                                        <div className="logo-design-grid">
+                                                            {cat.logoDesignImages.map((img, idx) => (
+                                                                <div className="gallery-item item-logo-crafted" key={idx}>
+                                                                    <img src={img.src} alt={img.alt} style={{ width: '100%', height: '100%', objectFit: 'contain', padding: '15px', borderRadius: '20px' }} />
+                                                                </div>
+                                                            ))}
+                                                        </div>
+                                                    </div>
+                                                )}
                                             </div>
                                         ) : cat.id === 'web' ? (
                                             <div className="custom-web-layout">

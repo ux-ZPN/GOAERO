@@ -33,6 +33,7 @@ const Footer = () => {
                         <ul className="footer-links">
                             <li><a href="#">Web Development</a></li>
                             <li><a href="#">UI/UX Design</a></li>
+                            <li><a href="#">Logo & Branding</a></li>
                             <li><a href="#">Graphic Design</a></li>
                             <li><a href="#">Video Editing</a></li>
                         </ul>
