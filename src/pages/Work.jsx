@@ -9,8 +9,8 @@ import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import './Work.css';
 
-// Set up PDF.js worker with a more stable CDN for production
-pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.mjs`;
+// Set up PDF.js worker with unpkg CDN (officially recommended for react-pdf)
+pdfjs.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
 
 const PDFViewer = ({ pdfUrl }) => {
     const [numPages, setNumPages] = useState(null);
@@ -38,7 +38,7 @@ const PDFViewer = ({ pdfUrl }) => {
                     spaceBetween={10}
                     slidesPerView={1}
                 >
-                    {Array.from(new Array(numPages), (el, index) => (
+                    {numPages && Array.from(new Array(numPages), (el, index) => (
                         <SwiperSlide key={`page_${index + 1}`}>
                             <div className="pdf-page-wrapper">
                                 <Page
