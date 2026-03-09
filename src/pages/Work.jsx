@@ -9,8 +9,8 @@ import 'react-pdf/dist/Page/AnnotationLayer.css';
 import 'react-pdf/dist/Page/TextLayer.css';
 import './Work.css';
 
-// Set up PDF.js worker
-pdfjs.GlobalWorkerOptions.workerSrc = `//unpkg.com/pdfjs-dist@${pdfjs.version}/build/pdf.worker.min.mjs`;
+// Set up PDF.js worker with a more stable CDN for production
+pdfjs.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.mjs`;
 
 const PDFViewer = ({ pdfUrl }) => {
     const [numPages, setNumPages] = useState(null);
@@ -146,7 +146,7 @@ const Work = () => {
             desc: 'VISUAL IDENTITY & BRAND STRATEGY',
             smallDesc: 'Flip through our visual identity guide and watch our brand motion story to see how we build cohesive identities through strategy and design.',
             styleClass: 'style-branding',
-            pdfUrl: '/assets/Artboard 82x-100.pdf',
+            pdfUrl: '/assets/branding_guide.pdf',
             introVideo: '/assets/purpleshrine.mp4',
             logoDesignImages: [
                 { src: '/assets/logo1.png', alt: 'Logo Design 1' },
